@@ -6,11 +6,11 @@ import PostList from '../../components/PostList';
 import PostCreateWidget from '../../components/PostCreateWidget/PostCreateWidget';
 
 // Import Actions
-import { addPostRequest, fetchPosts, deletePostRequest, editPostRequest } from '../../PostActions';
-import { toggleAddPost, toggleEditPost } from '../../../App/AppActions';
+import { addPostRequest, fetchPosts, deletePostRequest, thumbUpRequest, thumbDownRequest } from '../../PostActions';
+import { toggleAddPost } from '../../../App/AppActions';
 
 // Import Selectors
-import { getShowAddPost, getShowEditPost } from '../../../App/AppReducer';
+import { getShowAddPost } from '../../../App/AppReducer';
 import { getPosts } from '../../PostReducer';
 
 class PostListPage extends Component {
@@ -22,11 +22,6 @@ class PostListPage extends Component {
     this.props.dispatch(toggleAddPost());
     this.props.dispatch(addPostRequest({ name, title, content }));
   };
-
-  handleEditPost = posts => {
-    this.props.dispatch(toggleEditPost());
-    this.props.dispatch(editPostRequest({ name, title, content }));
-  }
 
   handleDeletePost = posts => {
     if (confirm('Do you want to delete this post')) { // eslint-disable-line
@@ -51,7 +46,6 @@ PostListPage.need = [() => { return fetchPosts(); }];
 function mapStateToProps(state) {
   return {
     showAddPost: getShowAddPost(state),
-    showEditPost: getShowEditPost(state),
     posts: getPosts(state),
   };
 }
