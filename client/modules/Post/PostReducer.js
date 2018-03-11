@@ -30,13 +30,15 @@ const PostReducer = (state = initialState, action) => {
       };
 
     case THUMB_UP:
+      _v++;
       return {
-        data: [action.post.votes, ...data],
+        data: [action.post._v, ...data],
       };
 
     case THUMB_DOWN:
+      _v--;
       return {
-        data: [action.post.votes, ...data],
+        data: [action.post._v, ...data],
       }
 
     default:

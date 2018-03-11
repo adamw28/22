@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { getShowEditPost } from '../../../App/AppReducer';
 import { toggleEditPost } from '../../../App/AppActions';
+import { thumbUpRequest, thumbDownRequest } from '../../PostActions';
 
 // Import Style
 import styles from '../../components/PostListItem/PostListItem.css';
@@ -21,7 +22,9 @@ export class PostDetailPage extends React.Component {
       name: this.props.post.name,
       title: this.props.post.title,
       content: this.props.post.content,
+      votes: this.props.post._v,
     };
+    console.log(this.props.post._v);
   }
 
   handleEditPost = () => {
@@ -98,6 +101,22 @@ export class PostDetailPage extends React.Component {
         >
           <FormattedMessage id="editPost" />
         </a>
+        <button
+          className={styles['button-thumb']}
+          name="thumbUp"
+          onChange={thumbUpRequest}>
+        +</button>
+        <button
+          className={styles['button-thumb']}
+          name="thumbDown"
+          value="-"
+          onClick={thumbDownRequest}>
+        -</button>
+        <span
+          className={styles['button-thumb']}
+          name="votes">
+          {this.state.votes}
+        </span>
         {this.props.showEditPost ? this.renderPostForm() : this.renderPost()}
       </div>
     );
