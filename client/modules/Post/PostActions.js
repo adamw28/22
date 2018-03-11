@@ -70,7 +70,7 @@ export function thumbUpRequest(cuid, post){
         name: post.name,
         title: post.title,
         content: post.content,
-        votes: post.votes
+        votes: post.voteCount
       },
     }).then(() => dispatch(thumbUpth(cuid, post)));
   };
@@ -91,7 +91,7 @@ export function thumbDownRequest(cuid, post){
         name: post.name,
         title: post.title,
         content: post.content,
-        votes: post.votes
+        votes: post.voteCount
       },
     }).then(() => dispatch(thumbDownRequest(cuid, post)));
   };

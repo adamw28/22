@@ -22,9 +22,9 @@ export class PostDetailPage extends React.Component {
       name: this.props.post.name,
       title: this.props.post.title,
       content: this.props.post.content,
-      votes: this.props.post._v,
+      votes: this.props.post.voteCount,
     };
-    console.log(this.props.post._v);
+    console.log(this.props.post.votes);
   }
 
   handleEditPost = () => {
@@ -104,7 +104,7 @@ export class PostDetailPage extends React.Component {
         <button
           className={styles['button-thumb']}
           name="thumbUp"
-          onChange={thumbUpRequest}>
+          onClick={thumbUpRequest}>
         +</button>
         <button
           className={styles['button-thumb']}
@@ -142,6 +142,8 @@ function mapDispatchToProps(dispatch, props) {
   return {
     toggleEditPost: () => dispatch(toggleEditPost()),
     editPostRequest: post => dispatch(editPostRequest(props.params.cuid, post)),
+    thumbUpRequest: post => dispatch(thumbUpRequest(props.params.cuid, post)),
+    thumbDownRequest: post => dispatch(thumbDownRequest(props.params.cuid, post))
   };
 }
 
