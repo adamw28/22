@@ -4,13 +4,12 @@ import Helmet from 'react-helmet';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { getShowEditPost } from '../../../App/AppReducer';
 import { toggleEditPost } from '../../../App/AppActions';
-import { thumbUpRequest, thumbDownRequest } from '../../PostActions';
 
 // Import Style
 import styles from '../../components/PostListItem/PostListItem.css';
 
 // Import Actions
-import { fetchPost, editPostRequest } from '../../PostActions';
+import { fetchPost, editPostRequest, thumbUpRequest, thumbDownRequest } from '../../PostActions';
 
 // Import Selectors
 import { getPost } from '../../PostReducer';
@@ -22,9 +21,8 @@ export class PostDetailPage extends React.Component {
       name: this.props.post.name,
       title: this.props.post.title,
       content: this.props.post.content,
-      votes: this.props.post.voteCount,
+      voteCount: this.props.post.voteCount,
     };
-    console.log(this.props.post.votes);
   }
 
   handleEditPost = () => {
@@ -39,6 +37,14 @@ export class PostDetailPage extends React.Component {
       [name]: value,
     });
   };
+
+  handleUp = () => {
+    this.props.thumbUpRequest(this.props.params.cuid, this.state);
+  }
+
+  handleDown = () => {
+    this.props.thumbDownRequest(this.props.params.cuid, this.state);
+  }
 
   renderPostForm = () => {
     return (
@@ -104,18 +110,18 @@ export class PostDetailPage extends React.Component {
         <button
           className={styles['button-thumb']}
           name="thumbUp"
-          onClick={thumbUpRequest}>
+          onClick={this.handleUp.bind(this)}>
         +</button>
         <button
           className={styles['button-thumb']}
           name="thumbDown"
           value="-"
-          onClick={thumbDownRequest}>
+          onClick={this.handleDown.bind(this)}>
         -</button>
         <span
           className={styles['button-thumb']}
           name="votes">
-          {this.state.votes}
+          {this.state.voteCount}
         </span>
         {this.props.showEditPost ? this.renderPostForm() : this.renderPost()}
       </div>
@@ -138,7 +144,7 @@ function mapStateToProps(state, props) {
   };
 }
 
-function mapDispatchToProps(dispatch, props) {
+function mapDispatchToProps(dispatch, props) {console.log(props);console.log("I");console.log(PostDetailPage);
   return {
     toggleEditPost: () => dispatch(toggleEditPost()),
     editPostRequest: post => dispatch(editPostRequest(props.params.cuid, post)),
@@ -165,6 +171,8 @@ PostDetailPage.propTypes = {
   showEditPost: PropTypes.bool.isRequired,
   toggleEditPost: PropTypes.func.isRequired,
   editPostRequest: PropTypes.func.isRequired,
+  thumbUpRequest: PropTypes.func.isRequired,
+  thumbDownRequest: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(
