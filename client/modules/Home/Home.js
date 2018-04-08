@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+//import styles from './Home.css';
 
 class Home extends Component {
   render() {
@@ -18,9 +18,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {};
-};
-
-Home.propTypes = {
 };
 
 export default connect(

@@ -1,14 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
-function Hello(props, context) {
+function Hello() {
   return (
-      <div>
-        <h2>Hello world!</h2>
-      </div>
+    <div>
+      <h2>Hello world!</h2>
+    </div>
   );
 }
-
-Hello.propTypes = {
-};
 
 export default Hello;

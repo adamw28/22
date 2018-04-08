@@ -22,7 +22,7 @@ export class PostDetailPage extends React.Component {
       title: this.props.post.title,
       content: this.props.post.content,
       voteCount: this.props.post.voteCount,
-    };
+    };console.log(this.props);
   }
 
   handleEditPost = () => {
@@ -39,11 +39,12 @@ export class PostDetailPage extends React.Component {
   };
 
   handleUp = () => {
-    this.props.thumbUpRequest(this.props.params.cuid, this.state);
+    console.log(this.props.post);
+    this.props.thumbUpRequest(this.props.params.cuid, this.props.post);
   }
 
   handleDown = () => {
-    this.props.thumbDownRequest(this.props.params.cuid, this.state);
+    this.props.thumbDownRequest(this.props.params.cuid, this.props.post);
   }
 
   renderPostForm = () => {
@@ -121,7 +122,7 @@ export class PostDetailPage extends React.Component {
         <span
           className={styles['button-thumb']}
           name="votes">
-          {this.state.voteCount}
+          {this.props.post.voteCount}
         </span>
         {this.props.showEditPost ? this.renderPostForm() : this.renderPost()}
       </div>
@@ -144,7 +145,7 @@ function mapStateToProps(state, props) {
   };
 }
 
-function mapDispatchToProps(dispatch, props) {console.log(props);console.log("I");console.log(PostDetailPage);
+function mapDispatchToProps(dispatch, props) {
   return {
     toggleEditPost: () => dispatch(toggleEditPost()),
     editPostRequest: post => dispatch(editPostRequest(props.params.cuid, post)),

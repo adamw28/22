@@ -1,32 +1,25 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 // Import Style
-//import styles from './About.css';
+// import styles from './About.css';
 
 class About extends Component {
   render() {
     return (
-    	<div>
-    	<p>Coś o mnie</p>
-    	</div>
+      <div>
+        <p>Coś o mnie</p>
+      </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {};
 };
 
-About.propTypes = {
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(About);
+export default connect(mapStateToProps, mapDispatchToProps)(About);

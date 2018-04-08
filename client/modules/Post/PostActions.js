@@ -17,14 +17,14 @@ export function addPost(post) {
 }
 
 export function addPostRequest(post) {
-  return (dispatch) => {
+  return dispatch => {
     return callApi('posts', 'post', {
       post: {
         name: post.name,
         title: post.title,
         content: post.content,
-        voteCount: post.voteCount
-      },
+        voteCount: post.voteCount,
+      }
     }).then(res => dispatch(addPost(res.post)));
   };
 }
@@ -45,19 +45,19 @@ export function editPost(cuid, post) {
 }
 
 export function editPostRequest(cuid, post) {
-  return (dispatch) => {
+  return dispatch => {
     return callApi(`posts/${cuid}`, 'put', {
       post: {
         name: post.name,
         title: post.title,
         content: post.content,
-        voteCount: post.voteCount
-      },
+        voteCount: post.voteCount,
+      }
     }).then(() => dispatch(editPost(cuid, post)));
   };
 }
 
-export function thumbUp(cuid, post){
+export function thumbUp(cuid, post) {
   return {
     type: THUMB_UP,
     cuid,
@@ -65,24 +65,22 @@ export function thumbUp(cuid, post){
   };
 }
 
-export function thumbUpRequest(cuid, post){
-  console.log(post);
-  return (dispatch) => {
+export function thumbUpRequest(cuid, post) {
+  return dispatch => {
     return callApi(`posts/${cuid}`, 'put', {
       post: {
         name: post.name,
         title: post.title,
         content: post.content,
-        voteCount: post.voteCount
-      },
+        voteCount: post.voteCount,
+      }
     }).then(() => {
-      console.log(post.voteCount);
-      return dispatch(thumbUp(cuid, post))}
-    );
+      return dispatch(thumbUp(cuid, post));
+    });
   };
 }
 
-export function thumbDown(cuid, post){
+export function thumbDown(cuid, post) {
   return {
     type: THUMB_DOWN,
     cuid,
@@ -90,22 +88,24 @@ export function thumbDown(cuid, post){
   };
 }
 
-export function thumbDownRequest(cuid, post){
-  return (dispatch) => {
+export function thumbDownRequest(cuid, post) {
+  return dispatch => {
     return callApi(`posts/${cuid}`, 'put', {
       post: {
         name: post.name,
         title: post.title,
         content: post.content,
-        voteCount: post.voteCount
-      },
-    }).then(() => {
-      return dispatch(thumbDown(cuid, post))});
+        voteCount: post.voteCount,
+      }
+    })
+    .then(() => {
+      return dispatch(thumbDown(cuid, post));
+    });
   };
 }
 
 export function fetchPosts() {
-  return (dispatch) => {
+  return dispatch => {
     return callApi('posts').then(res => {
       dispatch(addPosts(res.posts));
     });
@@ -113,7 +113,7 @@ export function fetchPosts() {
 }
 
 export function fetchPost(cuid) {
-  return (dispatch) => {
+  return dispatch => {
     return callApi(`posts/${cuid}`).then(res => dispatch(addPost(res.post)));
   };
 }
@@ -126,7 +126,9 @@ export function deletePost(cuid) {
 }
 
 export function deletePostRequest(cuid) {
-  return (dispatch) => {
-    return callApi(`posts/${cuid}`, 'delete').then(() => dispatch(deletePost(cuid)));
+  return dispatch => {
+    return callApi(`posts/${cuid}`, 'delete').then(() =>
+      dispatch(deletePost(cuid))
+    );
   };
 }
