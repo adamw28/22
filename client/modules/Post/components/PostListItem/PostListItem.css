@@ -71,11 +71,25 @@ textarea {
     margin-bottom: 16px;
     font-weight: 400;
     color: #616161;
+    display:inline-block;
 }
 
 .post-title a{
     text-decoration: none;
     color: #616161;
+}
+
+.thumb{
+    margin-left: 50px;
+    display:inline-block;
+    position: relative;
+    bottom: 10px;
+}
+
+.thumb button{
+    border-radius: 10px;
+    border: none;
+    background: #8B8B83;
 }
 
 .author-name{

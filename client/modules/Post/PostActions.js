@@ -51,7 +51,6 @@ export function editPostRequest(cuid, post) {
         name: post.name,
         title: post.title,
         content: post.content,
-        voteCount: post.voteCount,
       }
     }).then(() => dispatch(editPost(cuid, post)));
   };
@@ -69,9 +68,6 @@ export function thumbUpRequest(cuid, post) {
   return dispatch => {
     return callApi(`posts/${cuid}`, 'put', {
       post: {
-        name: post.name,
-        title: post.title,
-        content: post.content,
         voteCount: post.voteCount,
       }
     }).then(() => {
@@ -92,9 +88,6 @@ export function thumbDownRequest(cuid, post) {
   return dispatch => {
     return callApi(`posts/${cuid}`, 'put', {
       post: {
-        name: post.name,
-        title: post.title,
-        content: post.content,
         voteCount: post.voteCount,
       }
     })

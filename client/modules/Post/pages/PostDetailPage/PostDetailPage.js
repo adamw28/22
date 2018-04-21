@@ -1,28 +1,33 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
-import { injectIntl, FormattedMessage } from 'react-intl';
-import { getShowEditPost } from '../../../App/AppReducer';
-import { toggleEditPost } from '../../../App/AppActions';
+import React, { PropTypes } from "react";
+import { connect } from "react-redux";
+import Helmet from "react-helmet";
+import { injectIntl, FormattedMessage } from "react-intl";
+import { getShowEditPost } from "../../../App/AppReducer";
+import { toggleEditPost } from "../../../App/AppActions";
 
 // Import Style
-import styles from '../../components/PostListItem/PostListItem.css';
+import styles from "../../components/PostListItem/PostListItem.css";
 
 // Import Actions
-import { fetchPost, editPostRequest, thumbUpRequest, thumbDownRequest } from '../../PostActions';
+import {
+  fetchPost,
+  editPostRequest,
+  thumbUpRequest,
+  thumbDownRequest
+} from "../../PostActions";
 
 // Import Selectors
-import { getPost } from '../../PostReducer';
+import { getPost } from "../../PostReducer";
 
 export class PostDetailPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: this.props.post.name,
-      title: this.props.post.title,
-      content: this.props.post.content,
-      voteCount: this.props.post.voteCount,
-    };console.log(this.props);
+      name : this.props.post.name,
+      title : this.props.post.title,
+      content : this.props.post.content,
+      voteCount : this.props.post.voteCount,
+    };
   }
 
   handleEditPost = () => {
@@ -34,20 +39,19 @@ export class PostDetailPage extends React.Component {
     const { value, name } = event.target;
 
     this.setState({
-      [name]: value,
+      [name]: value
     });
   };
 
   handleUp = () => {
-    console.log(this.props.post);
-    this.props.thumbUpRequest(this.props.params.cuid, this.props.post);
-  }
+    this.props.thumbUpRequest(this.props.post);
+  };
 
   handleDown = () => {
-    this.props.thumbDownRequest(this.props.params.cuid, this.props.post);
-  }
+    this.props.thumbDownRequest(this.props.post);
+  };
 
-  renderPostForm = () => {
+    renderPostForm = () => {
     return (
       <div className={styles['form-content']}>
         <h2 className={styles['form-title']}>
@@ -87,12 +91,32 @@ export class PostDetailPage extends React.Component {
 
   renderPost = () => {
     return (
-      <div className={`${styles['single-post']} ${styles['post-detail']}`}>
-        <h3 className={styles['post-title']}>{this.props.post.title}</h3>
-        <p className={styles['author-name']}>
+      <div className={`${styles["single-post"]} ${styles["post-detail"]}`}>
+        <h3 className={styles["post-title"]}>{this.props.post.title}</h3>
+        <div className={styles["thumb"]}>
+          <button
+            className={styles["button-thumb"]}
+            name="thumbUp"
+            onClick={this.handleUp.bind(this)}
+          >
+            +
+          </button>
+          <button
+            className={styles["button-thumb"]}
+            name="thumbDown"
+            value="-"
+            onClick={this.handleDown.bind(this)}
+          >
+            -
+          </button>
+          <span className={styles["button-thumb"]} name="votes">
+            {this.props.post.voteCount}
+          </span>
+        </div>
+        <p className={styles["author-name"]}>
           <FormattedMessage id="by" /> {this.props.post.name}
         </p>
-        <p className={styles['post-desc']}>{this.props.post.content}</p>
+        <p className={styles["post-desc"]}>{this.props.post.content}</p>
       </div>
     );
   };
@@ -102,28 +126,13 @@ export class PostDetailPage extends React.Component {
       <div>
         <Helmet title={this.props.post.title} />
         <a
-          className={styles['edit-post-button']}
+          className={styles["edit-post-button"]}
           href="#"
           onClick={this.props.toggleEditPost}
         >
           <FormattedMessage id="editPost" />
         </a>
-        <button
-          className={styles['button-thumb']}
-          name="thumbUp"
-          onClick={this.handleUp.bind(this)}>
-        +</button>
-        <button
-          className={styles['button-thumb']}
-          name="thumbDown"
-          value="-"
-          onClick={this.handleDown.bind(this)}>
-        -</button>
-        <span
-          className={styles['button-thumb']}
-          name="votes">
-          {this.props.post.voteCount}
-        </span>
+
         {this.props.showEditPost ? this.renderPostForm() : this.renderPost()}
       </div>
     );
@@ -134,14 +143,14 @@ export class PostDetailPage extends React.Component {
 PostDetailPage.need = [
   params => {
     return fetchPost(params.cuid);
-  },
+  }
 ];
 
 // Retrieve data from store as props
 function mapStateToProps(state, props) {
   return {
     post: getPost(state, props.params.cuid),
-    showEditPost: getShowEditPost(state),
+    showEditPost: getShowEditPost(state)
   };
 }
 

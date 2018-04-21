@@ -35,7 +35,9 @@ const PostReducer = (state = initialState, action) => {
           if (post.cuid === action.cuid) {
             return { ...post, voteCount: post.voteCount + 1 };
           }
-          return post;
+          return post.cuid === action.cuid
+            ? Object.assign({}, post, action.post)
+            : post;
         }),
       };
 
@@ -45,7 +47,9 @@ const PostReducer = (state = initialState, action) => {
           if (post.cuid === action.cuid) {
             return { ...post, voteCount: post.voteCount - 1 };
           }
-          return post;
+          return post.cuid === action.cuid
+            ? Object.assign({}, post, action.post)
+            : post;
         }),
       };
 
